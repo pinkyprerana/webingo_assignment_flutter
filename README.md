@@ -1,8 +1,7 @@
 # flutter_assignment_app
 
-This project is a Flutter application built as part of the assignment for Webingo.  
-It implements **three UI screens** and integrates with the provided API collection.  
-The app follows a clean architecture with proper separation of concerns, state management, and responsive design.
+This repository contains the UI development work I have completed for the Webingo assignment, based on the design provided.
+The work includes implementation of layout elements such as gradient backgrounds, top positioned components, and bottom drawer designs, as per the given Image reference.
 
 ---
 
@@ -12,4 +11,6 @@ The app follows a clean architecture with proper separation of concerns, state m
    ```bash
    git clone https://github.com/pinkyprerana/flutter_assignment_app.git
    cd flutter_assignment_app
+   flutter pub get
+   flutter run
 
