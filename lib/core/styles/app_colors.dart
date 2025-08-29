@@ -11,7 +11,7 @@ class AppColors {
   static const Color colorActiveNav = Color(0xFF65707F);
   static const Color colorPrimaryAlpha = Color(0xFF6F6F6F);
   static const Color colorGrey = Color(0xFFF5F5F5);
-  static const Color colorGreen = Color(0xFF0B9521);
+  static const Color colorGreen = Color(0xFFB2FF59);
   static const Color colorWhite = Color(0xFFFFFFFF);
   static const Color colorGrey2 = Color(0xFFE8E8EA);
   static const Color colorGrey3 = Color(0xFFE4E4E4);

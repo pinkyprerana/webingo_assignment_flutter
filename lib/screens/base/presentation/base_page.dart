@@ -65,7 +65,6 @@ class _BasePageState extends ConsumerState<BasePage> {
         padding: EdgeInsets.all(1),
         child: Container(
           height: 75.h,
-          padding: EdgeInsets.symmetric(horizontal: 10.r),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50.r),
             border: Border.all(color: AppColors.colorTertiary),
@@ -74,7 +73,7 @@ class _BasePageState extends ConsumerState<BasePage> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10.r),
             child: BottomNavigationBar(
-              selectedFontSize: 0.sp, //If tab name is there
+              selectedFontSize: 0.sp,
               unselectedFontSize: 10.sp,
               selectedItemColor: AppColors.colorSecondary,
               unselectedItemColor: AppColors.colorWhite,

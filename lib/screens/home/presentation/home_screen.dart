@@ -6,6 +6,8 @@ import '../../../core/constants/assets.dart';
 import '../../../core/styles/app_colors.dart';
 import '../../profile/shared/providers.dart';
 
+final selectedDateProvider = StateProvider<int>((ref) => 3);
+
 @RoutePage()
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +21,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final profileState = ref.watch(profileNotifierProvider);
     final String name = profileState.fetchedUser?.fullName ?? "Sandra";
-    final String image = profileState.fetchedUser?.userImage ?? "";
+    final String image = profileState.fetchedUser?.userImage ?? "https://i.pravatar.cc/150?img=5";
+
+    final selectedIndex = ref.watch(selectedDateProvider);
+
+    final days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    final dates = [22, 23, 24, 25, 26, 27, 28];
 
     return Scaffold(
       backgroundColor: AppColors.colorWhite,
@@ -141,43 +148,66 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                   /// DATE SELECTOR
                   SizedBox(
-                    height: 80.h,
+                    height: 100.h,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 7,
                       itemBuilder: (context, index) {
-                        final days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-                        final dates = [22, 23, 24, 25, 26, 27, 28];
-                        final isSelected = index == 3;
-                        return Padding(
-                          padding: EdgeInsets.only(right: 12.w),
-                          child: Column(
-                            children: [
-                              Text(
-                                days[index],
-                                style: TextStyle(
-                                  fontSize: 12.sp,
-                                  color: AppColors.colorBlack.withOpacity(0.6),
+                        final isSelected = index == selectedIndex;
+                        return GestureDetector(
+                          onTap: () {
+                            ref.read(selectedDateProvider.notifier).state = index;
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 10.w),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                                border: Border.all(color: Colors.black12),
+                                color: isSelected ? Colors.black : Colors.white,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      days[index],
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: isSelected ? Colors.white : Colors.black,
+                                      ),
+                                    ),
+                                    6.verticalSpace,
+                                    Container(
+                                      height: 5,
+                                      width: 5,
+                                      decoration: BoxDecoration(
+                                        color: isSelected ? Colors.white : Colors.black,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    6.verticalSpace,
+                                    Container(
+                                      width: 44.w,
+                                      height: 44.w,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: isSelected ? Colors.black : Colors.white,
+                                        shape: BoxShape.circle,
+                                        // border: Border.all(color: Colors.black12),
+                                      ),
+                                      child: Text(
+                                        "${dates[index]}",
+                                        style: TextStyle(
+                                          color: isSelected ? Colors.white : Colors.black,
+                                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                        ),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                              5.verticalSpace,
-                              Container(
-                                width: 44.w,
-                                height: 44.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: isSelected ? AppColors.colorBlack : AppColors.colorWhite,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.black12),
-                                ),
-                                child: Text(
-                                  "${dates[index]}",
-                                  style: TextStyle(
-                                    color: isSelected ? AppColors.colorWhite : AppColors.colorBlack,
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
                           ),
                         );
                       },
@@ -191,7 +221,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     "Your plan",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18.sp,
+                      fontSize: 20.sp,
                       color: Colors.black,
                     ),
                   ),
@@ -199,6 +229,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   15.verticalSpace,
 
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       /// LEFT CARD
                       Expanded(
@@ -220,11 +252,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16.sp,
                                       color: Colors.black)),
-                              5.verticalSpace,
+                              50.verticalSpace,
                               Text("25 Nov.\n14:00–15:00\nA5 room",
                                   style: TextStyle(
                                       fontSize: 12.sp, color: Colors.black87)),
-                              10.verticalSpace,
+                              70.verticalSpace,
                               Row(
                                 children: [
                                   CircleAvatar(
@@ -246,38 +278,61 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                       /// RIGHT CARD
                       Expanded(
-                        child: Container(
-                          padding: EdgeInsets.all(16.r),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFA9D1F9), // light blue
-                            borderRadius: BorderRadius.circular(20.r),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Light",
-                                  style: TextStyle(
-                                      fontSize: 12.sp, color: Colors.black87)),
-                              5.verticalSpace,
-                              Text("Balance",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16.sp,
-                                      color: Colors.black)),
-                              5.verticalSpace,
-                              Text("28 Nov.\n18:00–19:30\nA2 room",
-                                  style: TextStyle(
-                                      fontSize: 12.sp, color: Colors.black87)),
-                              10.verticalSpace,
-                              Align(
-                                alignment: Alignment.bottomRight,
-                                child: Image.asset(
-                                  "assets/images/balance.png", // add 3D illustration
-                                  height: 50.h,
-                                ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(16.r),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFA9D1F9), // light blue
+                                borderRadius: BorderRadius.circular(20.r),
                               ),
-                            ],
-                          ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Light",
+                                      style: TextStyle(
+                                          fontSize: 12.sp, color: Colors.black87)),
+                                  5.verticalSpace,
+                                  Text("Balance",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16.sp,
+                                          color: Colors.black)),
+                                  5.verticalSpace,
+                                  Text("28 Nov.\n18:00–19:30\nA2 room",
+                                      style: TextStyle(
+                                          fontSize: 12.sp, color: Colors.black87)),
+                                  10.verticalSpace,
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Image.asset(
+                                      Assets.challenge,
+                                      height: 50.h,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            20.verticalSpace,
+                            /// PINK SOCIAL ICONS ROW
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFF48FB1),
+                                borderRadius: BorderRadius.circular(20.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: const [
+                                  Icon(Icons.camera_alt, color: Colors.white),
+                                  Icon(Icons.play_circle_fill, color: Colors.white),
+                                  Icon(Icons.music_note, color: Colors.white),
+                                  Icon(Icons.alternate_email, color: Colors.white),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

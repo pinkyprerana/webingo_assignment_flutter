@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../core/styles/app_colors.dart';
 
 @RoutePage()
 class DashboardScreen extends StatelessWidget {
@@ -12,62 +13,72 @@ class DashboardScreen extends StatelessWidget {
       backgroundColor: const Color(0xFFF7F7F7),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(16.r),
+          padding: EdgeInsets.all(10.r),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// HEADER
-              Row(
-                children: [
-                  const Icon(Icons.location_on, color: Colors.black54),
-                  5.horizontalSpace,
-                  const Text("Norway",
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.w500)),
-                  const Spacer(),
-                  const CircleAvatar(
-                    radius: 16,
-                    backgroundImage: NetworkImage(
-                        "https://i.pravatar.cc/150?img=3"), // profile avatar
-                  ),
-                  10.horizontalSpace,
-                  const Icon(Icons.search, color: Colors.black54),
-                ],
-              ),
-
-              20.verticalSpace,
-
-              /// GREETING
-              Text(
-                "Hey, Martin! Tell us where you want to go",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-
-              20.verticalSpace,
-
-              /// SEARCH BAR
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                padding: EdgeInsets.all(20.r),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.75),
-                  borderRadius: BorderRadius.circular(30.r),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.search, color: Colors.white),
-                    10.horizontalSpace,
-                    const Text(
-                      "Search places",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                  color: AppColors.colorSecondary.withAlpha(80),
+                  borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQGLanNnFsLi3QnQFdh-k-mkwG6yrEEXhorSoElObizTnP0_8rR",
                     ),
-                    const Spacer(),
-                    const Text(
-                      "Date range • Number of guests",
-                      style: TextStyle(color: Colors.white70, fontSize: 12),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    /// HEADER
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on, color: Colors.black54),
+                        5.horizontalSpace,
+                        const Text("Norway",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w500)),
+                        const Spacer(),
+                        const CircleAvatar(
+                          radius: 16,
+                          backgroundImage: NetworkImage(
+                              "https://i.pravatar.cc/150?img=5"),
+                        ),
+                      ],
+                    ),
+                
+                    20.verticalSpace,
+                
+                    /// GREETING
+                    Text(
+                      "Hey, Martin! Tell us where you want to go",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                
+                    50.verticalSpace,
+                
+                    /// SEARCH BAR
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.75),
+                        borderRadius: BorderRadius.circular(30.r),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search, color: Colors.white),
+                          10.horizontalSpace,
+                          const Text(
+                            "Search places",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -222,52 +233,6 @@ class DashboardScreen extends StatelessWidget {
           ),
         ),
       ),
-
-      /// BOTTOM NAVIGATION
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        decoration: const BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(25),
-            topRight: Radius.circular(25),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: const [
-            _BottomNavItem(icon: Icons.explore, label: "Discover", selected: true),
-            _BottomNavItem(icon: Icons.favorite_border, label: "Favorites"),
-            _BottomNavItem(icon: Icons.book, label: "Bookings"),
-            _BottomNavItem(icon: Icons.message_outlined, label: "Messages"),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _BottomNavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool selected;
-
-  const _BottomNavItem(
-      {required this.icon, required this.label, this.selected = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(icon,
-            color: selected ? Colors.white : Colors.white70, size: 24),
-        const SizedBox(height: 4),
-        Text(label,
-            style: TextStyle(
-                fontSize: 12,
-                color: selected ? Colors.white : Colors.white70)),
-      ],
     );
   }
 }
